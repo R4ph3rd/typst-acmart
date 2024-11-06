@@ -12,8 +12,8 @@
       country: "USA",
       postcode: "43017-6221")
   let thorvaldGroup = (
-        institution: "The Thørväld Group",
-        streetaddress: "The Thørväld Circle",
+        institution: "The Thørväld Group",
+        streetaddress: "The Thørväld Circle",
         city: "Hekla",
         country: "Iceland")
   (
@@ -27,11 +27,11 @@
       email: "webmaster@marysville-ohio.com",
       affiliation: clarityInstitute),
     (
-      name: "Lars Thørväld",
+      name: "Lars Thørväld",
       email: "larst@affiliation.org",
       affiliation: thorvaldGroup),
     (
-      name: "Valerie Béranger",
+      name: "Valerie Béranger",
       affiliation: (
         institution: "Inria Paris-Rocquencourt",
         city: "Rocquencourt",
@@ -84,38 +84,67 @@
     preparation of the documentation of their work.
   ],
   ccs: (
-    ([Computer systems organization], (
-        (500, [Embedded systems]),
-        (300, [Redundancy]),
-        (0,   [Robotics]))),
-    ([Networks], (
-        (100, [Network reliability]),))
+    ([Do Not Use This Code], (
+        (500, [Generate the Correct Terms for Your Paper]),
+        (300, [Generate the Correct Terms for Your Paper]),
+        (0,   [Generate the Correct Terms for Your Paper]))),
   ),
-  // (
-  //   (500,   ([Computer systems organization], [Embedded systems])),
-  //   (300,   ([Computer systems organization], [Redundancy])),
-  //   (none,  ([Computer systems organization], [Robotics])),
-  //   (100,   ([Networks], [Network reliability]))
-  // ),
-  keywords: ("datasets", "neural networks", "gaze detection", "text tagging"),
+  keywords: ("Do", "Not", "Use", "This Code", "Put", "the", "Correct", "Terms for", "Your", "Paper"),
   copyright: "acmcopyright",
 
-  acmJournal: "JACM",
-  acmVolume: 37,
-  acmNumber: 4,
-  acmArticle: 1,
-  acmMonth: 8,
+  // acmJournalShort: "Woodstock",
+  // acmJournalLong: "ACM Symposium on Neural Gaze Detection",
+  // acmVolume: 37,
+  // acmNumber: 4,
+  // acmArticle: 1,
+  // acmDays: "03-05",
+  // acmMonth: 8,
+  // acmYear: 2018,
 
-  acmYear: 2018,
+  bibliography-file: "bib/bibliography.bib"
 )
 
 = Introduction
-ACM's consolidated article template, introduced in 2017, provides a
-consistent Typst style for use across ACM publications, and
-incorporates accessibility and metadata-extraction functionality
-necessary for future Digital Library endeavors. Numerous ACM and
-SIG-specific Typst templates have been examined, and their unique
-features incorporated into this single new template.
+@abenDistinctionWorkingMemory2012 is a reference.
+Here is another ref @adarCommandSpaceModelingRelationships2014.
+Cool @akcaComprehensiveAppraisalPerceptual2021.
+Banane. @agrawalaDesigningEffectiveStepbystep2003
+
+#{
+  let a = 60
+  let b = 3
+
+  [a = #a, b = #b]
+
+  // left.zip(right).map(
+  //   ((a,b)) => a + b
+  // )
+}
+
+#let c = 8
+
+#if c > 10 [
+  ACM's consolidated article template, introduced in 2017, provides a
+  consistent Typst style for use across ACM publications, and
+  incorporates accessibility and metadata-extraction functionality
+  necessary for future Digital Library endeavors. Numerous ACM and
+  SIG-specific Typst templates have been examined, and their unique
+  features incorporated into this single new template.
+] else [
+  This is shown because c < 10.
+
+  #let booksByAuthors = (
+    Shakespeare: "Hamlet",
+    Homer: "The Odyssey",
+    Austen: "Persuasion",
+  )
+
+  #let (Austen: AustenBook) = booksByAuthors
+
+  Austen wrote the book #AustenBook.
+]
+
+---------------------------------------------------------
 
 If you are new to publishing with ACM, this document is a valuable
 guide to the process of preparing your work for publication. If you
@@ -134,6 +163,7 @@ double-blind initial submission of a full-length technical paper, a
 two-page SIGGRAPH Emerging Technologies abstract, a "camera-ready"
 journal article, a SIGCHI Extended Abstract, and more --- all by
 selecting the appropriate _template style_ and _template parameters_.
+
 
 This document will explain the major features of the document
 class. For further information, the _Typst User's Guide_ is
@@ -181,6 +211,48 @@ source file:
 ```
 \documentclass[acmsmall]{acmart}
 ```
+
+= Modifications
+
+Modifying the template --- including but not limited to: adjusting
+margins, typeface sizes, line spacing, paragraph and list definitions,
+and the use of the `\vspace` command to manually adjust the
+vertical spacing between elements of your work --- is not allowed.
+
+*Your document will be returned to you for revision if modifications are discovered.*
+
+\documentclass[STYLE]{acmart}
+
+Journals use one of three template styles. All but three ACM journals
+use the `acmsmall` template style:
+- `acmsmall`: The default journal template style.
+- `acmlarge`: Used by JOCCH and TAP.
+- `acmtog`: Used by TOG.
+
+The majority of conference proceedings documentation will use the `acmconf` template style.
+- `acmconf`: The default proceedings template style.
+- `sigchi`: Used for SIGCHI conference articles.
+- `sigplan`: Used for SIGPLAN conference articles.
+
+== Template Parameters
+
+In addition to specifying the _template style_ to be used in
+formatting your work, there are a number of _template parameters_
+which modify some part of the applied template style. A complete list
+of these parameters can be found in the _Typst User's Guide._
+
+Frequently-used parameters, or combinations of parameters, include:
+- `anonymous,review`: Suitable for a "double-blind"
+  conference submission. Anonymizes the work and includes line
+  numbers. Use with the command to print the
+  submission's unique ID on each page of the work.
+- `authorversion`: Produces a version of the work suitable
+  for posting by the author.
+- `screen`: Produces colored hyperlinks.
+
+This document uses the following string as the first command in the
+source file:
+
 
 = Modifications
 

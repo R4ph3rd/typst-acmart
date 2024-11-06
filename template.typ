@@ -23,31 +23,39 @@
   keywords: none,
 
   // acm journal
-  acmJournal: none,
+  acmJournalShort: "Woodstock",
+  acmJournalLong: "ACM Symposium on Neural Gaze Detection",
   acmVolume: 1,
   acmNumber: 1,
   acmArticle: none,
-  acmMonth: 5,
+  acmMonth: 6,
+  acmDays: "03–05",
 
   // acm information
-  acmYear: 2023,
+  acmYear: 2018,
+  acmCityCode: "NY",
+  acmCity: "New York",
+  acmProvince: "NY",
+  acmState: "USA",
   acmDOI: "XXXXXXX.XXXXXXX",
 
   // copyright
   copyright: none,
-  copyrightYear: 2023,
+  copyrightYear: 2018,
+
+  bibliography-file: none,
 
   // paper's content
   body
 ) = {
-  let journal = if acmJournal == "JACM" {
-    (
-      name: "Journal of the ACM",
-      nameShort: "J. ACM"
-    )
-  } else {
-    none
-  }
+  // let journal = if acmJournal == "JACM" {
+  //   (
+  //     name: "Journal of the ACM",
+  //     nameShort: "J. ACM"
+  //   )
+  // } else {
+  //   none
+  // }
 
   let displayMonth(month) = (
     "January",
@@ -64,6 +72,8 @@
     "December"
   ).at(month - 1)
 
+  let displayShortYear(year) = year - 2000
+
   if shorttitle == none {
     shorttitle = title
   }
@@ -75,7 +85,7 @@
   // Set document metadata
   set document(title: title, author: authors.map(author => author.name))
 
-  set text(fill: blue)
+  set text(fill: black)
 
   // Configure the page.
   set page(
@@ -87,10 +97,9 @@
       left: 46pt,
       right: 46pt
     ),
-    header: locate(loc => {
-      set text(size: 8pt, font: sfFont)
-      let currentpage = loc.page()
-      if currentpage == 1 {
+    header: context(page => {
+    set text(size: 8pt, font: sfFont)
+      if page.number() == 1 {
         
       } else  {
         let acmArticlePage = [#acmArticle:#counter(page).display()]
@@ -113,21 +122,20 @@
       }
     }),
     header-ascent: 0%,
-    footer: locate(loc => {
-      set text(size: 8pt)
-      let currentpage = loc.page()
-      if currentpage == 1 {
+    footer: context(page => {
+        set text(size: 8pt)
+        if page.number() == 1 {
         [
-          Authors' addresses: #{
-            authors.fold((), (list, author) => {
-              list + (
-                [#author.name#{
-                  if author.at("email", default: none) != none [, #author.email]
+          // Authors' addresses: #{
+          //   authors.fold((), (list, author) => {
+          //     list + (
+          //       [#author.name#{
+          //         if author.at("email", default: none) != none [, #author.email]
                   
-                }]
-              ,)
-            }).join("; ", last: ".")
-          }
+          //       }]
+          //     ,)
+          //   }).join("; ", last: ".")
+          // }
 
           Permission to make digital or hard copies of all or part of this
           work for personal or classroom use is granted without fee provided
@@ -139,13 +147,15 @@
           redistribute to lists, requires prior specific permission
           and#h(.5pt)/or  a fee. Request permissions from
           permissions\@acm.org.\
-          #sym.copyright #acmYear Association for Computing Machinery\
-          0004-5411/2018/8-ART1 \$15.00\
-          https:\/\/doi.org\/#acmDOI
+          #sym.copyright #acmYear  Copyright held by the owner/author(s). Publication rights licensed to ACM.
+          Manuscript submitted to ACM
+          // Association for Computing Machinery\
+          // 0004-5411/2018/8-ART1 \$15.00\
+          // https:\/\/doi.org\/#acmDOI
         ]
       }
       let currentfooting = [
-          #journal.nameShort,
+          #acmJournalShort,
           Vol. #acmVolume,
           No. #acmNumber,
           Article #acmArticle.
@@ -170,7 +180,7 @@
   // set titlepage
   {
     set par(justify: true, leading: 0.555em)
-    show par: set block(below: 0pt)
+    set par(spacing: 0pt)
 
     // Display title
     {
@@ -244,13 +254,18 @@
       #authors.map(author => author.name).join(", ", last: " and ").
       #acmYear.
       #title.
-      #emph(journal.nameShort)
-      #acmVolume,
-      #acmNumber,
-      Article #acmArticle (#displayMonth(acmMonth) #acmYear),
+      #emph(acmJournalShort)'#displayShortYear(acmYear): #emph(acmJournalLong),
+      #displayMonth(acmMonth) #acmDays, #acmYear,
+      #acmCityCode. ACM
+      #acmCity,
+      #acmProvince,
+      #acmState,
+      // #acmVolume,
+      // #acmNumber,
+      // Article #acmArticle (#displayMonth(acmMonth) #acmYear),
       #counter(page).display((..nums) => [
-        #nums.pos().last() page#if(nums.pos().last() > 1) { [s] }.
-      ],both: true)
+          #nums.pos().last() page#if(nums.pos().last() > 1) { [s] }.
+      ], both: true)   
       https:\/\/doi.org\/#acmDOI
     ])
     v(1pt)
@@ -267,7 +282,8 @@
     justify: true,
     leading: 5.35pt,
     first-line-indent: 9.5pt)
-  show par: set block(below: 5.35pt)
+  set par(spacing: 5.35pt)
+
 
   // set page(
   //   margin: (
@@ -286,4 +302,9 @@
 
   // #locate( loc => 39pt + 24pt)
   // ]
+  
+  if bibliography-file != none {
+    show bibliography: set text(8pt)
+    bibliography(bibliography-file, title: text(11pt)[References], style: "association-for-computing-machinery")
+  }
 }
