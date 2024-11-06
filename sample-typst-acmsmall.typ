@@ -1,4 +1,5 @@
 #import "template.typ": *
+#import emoji: face
 
 #show: acmart.with(
   format: "acmsmall",
@@ -104,6 +105,15 @@
   bibliography-file: "bib/bibliography.bib"
 )
 
+// #figure(
+//   image("molecular.jpg", width: 80%),
+//   caption: [
+//     A step in the molecular testing
+//     pipeline of our lab.
+//   ],
+// )
+
+
 = Introduction
 @abenDistinctionWorkingMemory2012 is a reference.
 Here is another ref @adarCommandSpaceModelingRelationships2014.
@@ -144,7 +154,14 @@ Banane. @agrawalaDesigningEffectiveStepbystep2003
   Austen wrote the book #AustenBook.
 ]
 
+#face.grin
+
 ---------------------------------------------------------
+
+
+Guide from LateX to Typst : https://typst.app/docs/guides/guide-for-latex-users/
+
+------
 
 If you are new to publishing with ACM, this document is a valuable
 guide to the process of preparing your work for publication. If you
@@ -156,18 +173,32 @@ for any ACM publication --- conference or journal, and for any stage
 of publication, from review to final "camera-ready" copy, to the
 author's own version, with _very_ few changes to the source.
 
-= Template Overview
-As noted in the introduction, the "`acmart`" document class can
-be used to prepare many different kinds of documentation --- a
-double-blind initial submission of a full-length technical paper, a
-two-page SIGGRAPH Emerging Technologies abstract, a "camera-ready"
-journal article, a SIGCHI Extended Abstract, and more --- all by
-selecting the appropriate _template style_ and _template parameters_.
+
+#grid(
+  columns: (60pt, 1fr, 2fr),
+  rows: (auto, 60pt),
+  gutter: 3pt,
+  rect[Fixed width, auto height],
+  rect[1/3 of the remains],
+  rect[2/3 of the remains],
+  rect(height: 100%)[Fixed height],
+  grid.cell(
+    colspan: 2,
+    image("figures/banana.png", width: 100%, fit: "stretch"), // contain, cover
+    
+  ),
+)
 
 
-This document will explain the major features of the document
-class. For further information, the _Typst User's Guide_ is
-available from https://www.acm.org/publications/proceedings-template.
+= Maths
+$ v := vec(x_1, x_2, x_3) $
+
+Blalblablabalb lahlahaouzh oudhqs ipfuh piyfg .
+
+$ 7.32 beta +
+  sum_(i=0)^nabla
+    (Q_i (a_i - epsilon)) / 2 $
+
 
 == Template Styles
 

@@ -100,7 +100,6 @@
     header: context(page => {
     set text(size: 8pt, font: sfFont)
       if page.number() == 1 {
-        
       } else  {
         let acmArticlePage = [#acmArticle:#counter(page).display()]
         [
@@ -122,9 +121,10 @@
       }
     }),
     header-ascent: 0%,
-    footer: context(page => {
-        set text(size: 8pt)
-        if page.number() == 1 {
+    footer: context[
+      // page => {
+        #set text(8pt)
+        #if here().page() == 1 {
         [
           // Authors' addresses: #{
           //   authors.fold((), (list, author) => {
@@ -136,7 +136,7 @@
           //     ,)
           //   }).join("; ", last: ".")
           // }
-
+          #line(length: 100%)
           Permission to make digital or hard copies of all or part of this
           work for personal or classroom use is granted without fee provided
           that copies are not made or distributed for profit or commercial
@@ -152,26 +152,36 @@
           // Association for Computing Machinery\
           // 0004-5411/2018/8-ART1 \$15.00\
           // https:\/\/doi.org\/#acmDOI
+           
+          #set align(center)
+          #counter(page).display("1") 
         ]
+      } else {
+        [ 
+          #set align(center)
+          #counter(page).display("1") 
+        ]
+        // page.number()
+        // #counter(page).display(1)
+        // let currentfooting = [
+        //     #acmJournalShort,
+        //     Vol. #acmVolume,
+        //     No. #acmNumber,
+        //     Article #acmArticle.
+        //     Publication date: #displayMonth(acmMonth) #acmYear.
+        //   ]
+        // block(
+        //   height: 24pt,
+        //   width: 100%,
+        //   fill: gray,
+        //   if calc.rem(currentpage, 2) == 0 {
+        //     align(bottom + left, currentfooting)
+        //     } else {
+        //     align(bottom + right, currentfooting)
+        //     }
+        // )
       }
-      let currentfooting = [
-          #acmJournalShort,
-          Vol. #acmVolume,
-          No. #acmNumber,
-          Article #acmArticle.
-          Publication date: #displayMonth(acmMonth) #acmYear.
-        ]
-      block(
-        height: 24pt,
-        width: 100%,
-        fill: gray,
-        if calc.rem(currentpage, 2) == 0 {
-          align(bottom + left, currentfooting)
-          } else {
-          align(bottom + right, currentfooting)
-          }
-      )
-    }),
+    ],
     footer-descent: 0%,
   )
 
